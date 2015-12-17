@@ -16,3 +16,5 @@ for dbtype in dbtypes:
     test_label = sys.argv[2] if len(sys.argv) > 2 else "test_app"
     if os.system("cd test_denorm_project; python -Wall manage.py test %s" % test_label):
         exit(1)
+    if os.system("cd test_denorm_project; python -Wall manage.py denorm_daemon"):
+        exit(1)
