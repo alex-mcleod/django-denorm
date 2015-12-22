@@ -92,8 +92,15 @@ def denormalized(DBField, *args, **kwargs):
         def deconstruct(self):
             name, path, args, kwargs = super(DenormDBField, self).deconstruct()
             super_name, super_path, super_args, super_kwargs = DBField(*args, **kwargs).deconstruct()
-            args.append(self.func)
             return name, super_path, args, kwargs
+        
+        def clone(self):
+            """
+            Uses deconstruct() to clone a new copy of this Field.
+            Will not preserve any class attachments/attribute names.
+            """
+            name, path, args, kwargs = self.deconstruct()
+            return DBField(*args, **kwargs)
 
     def deco(func):
         dbfield = DenormDBField(func, *args, **kwargs)
