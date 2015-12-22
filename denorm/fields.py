@@ -98,6 +98,10 @@ def denormalized(DBField, *args, **kwargs):
             """
             Uses deconstruct() to clone a new copy of this Field.
             Will not preserve any class attachments/attribute names.
+            This has been copied from the original definition in 
+            django.db.fields.__init__ so that the DBField is copied
+            instead, as otherwise the `makemigrations` command
+            does not work in Django 1.9.
             """
             name, path, args, kwargs = self.deconstruct()
             return DBField(*args, **kwargs)
